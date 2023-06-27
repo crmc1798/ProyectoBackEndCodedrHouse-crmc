@@ -1,4 +1,4 @@
-const CustomError = require("../customErrors");
+const CustomError = require("../CustomErrors");
 const enumErrors = require("../enumErrors");
 const generateErrorInfo = require("../infoError");
 
