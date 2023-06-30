@@ -8,7 +8,6 @@ form.addEventListener("submit", (e) => {
     const obj = {};
 
     data.forEach((value, key) => obj[key] = value);
-    //console.log(data)
     const url = "/api/auth/passwordReset";
     const headers = {
         "Content-Type": "application/json"
@@ -21,9 +20,8 @@ form.addEventListener("submit", (e) => {
         method,
         body
     })
-    .then(response => response.json())
-    .then(data => console.log(data))
-    //.then(productsLink.click())
-    .catch(err => console.log(err))
-    setTimeout(()=>{productsLink.click()}, 1000); 
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(err => console.log(err))
+    setTimeout(() => { productsLink.click() }, 1000);
 })

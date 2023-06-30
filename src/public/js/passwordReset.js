@@ -22,16 +22,15 @@ form.addEventListener("submit", (e) => {
         method,
         body
     })
-    .then(response => response.json())
-    .then(data => procesarDatos(data))
-    //.then(productsLink.click())
-    .catch(err => console.log(err))
-    setTimeout(()=>{productsLink.click()}, 2000); 
+        .then(response => response.json())
+        .then(data => procesarDatos(data))
+        .catch(err => console.log(err))
+    setTimeout(() => { productsLink.click() }, 2000);
 })
 
 function procesarDatos(data) {
     console.log(data)
-    respuesta.innerHTML =   
-    `<h1>Mensaje: ${data.mesagge}</h1>`;
- 
+    respuesta.innerHTML =
+        `<h1>Mensaje: ${data.mesagge}</h1>`;
+
 }

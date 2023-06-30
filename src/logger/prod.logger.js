@@ -1,4 +1,4 @@
-const winston =require("winston");
+const winston = require("winston");
 
 const customLevelOptions = {
     levels: {
@@ -9,7 +9,7 @@ const customLevelOptions = {
         http: 4,
         debug: 5
     },
-    colors:{
+    colors: {
         fatal: "red",
         error: "magenta",
         warning: "yellow",
@@ -20,11 +20,11 @@ const customLevelOptions = {
 }
 
 const logger = winston.createLogger({
-    transports:[
+    transports: [
         new winston.transports.Console({
             level: "info",
             format: winston.format.combine(
-                winston.format.colorize({colors: customLevelOptions.colors}),
+                winston.format.colorize({ colors: customLevelOptions.colors }),
                 winston.format.simple()
             )
         }),

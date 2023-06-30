@@ -10,9 +10,10 @@ class SessionRouter extends Route {
         else {
           res.sendSuccess({ message: 'no eres un usuario logeado' });
         }
-      } 
+      }
       catch (error) {
-        res.sendServerError(`something went wrong ${error}`)
+        logger.error(`something went wrong ${error}`)
+        return res.sendServerError(`something went wrong ${error}`)
       }
     })
   }

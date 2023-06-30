@@ -27,12 +27,10 @@ cartSchema.pre('find', function () {
 
 cartSchema.pre('findOne', function () {
   this.populate('products.product', 'title price stock');
-  //this.populate('products.product');
 })
 
 cartSchema.pre('findOne', function () {
   this.populate('owner', 'first_name email _id');
-  //this.populate('products.product');
 })
 
 const Cart = mongoose.model(cartCollection, cartSchema);

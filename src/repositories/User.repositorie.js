@@ -1,5 +1,5 @@
-class UserRepository{
-    constructor(dao){
+class UserRepository {
+    constructor(dao) {
         this.dao = dao
     }
 
@@ -7,43 +7,48 @@ class UserRepository{
         try {
             const user = await this.dao.createUser(newUser);
             return user;
-        } catch (error) {
-            throw new Error(error)
+        } 
+        catch (error) {
+            return logger.error(`something went wrong ${error}`);
         }
     }
 
-    findAll = async() => {
+    findAll = async () => {
         try {
             const response = await this.dao.findAll();
             return response;
-        } catch (error) {
-            throw new Error(error)
+        } 
+        catch (error) {
+            return logger.error(`something went wrong ${error}`);
         }
     }
-    
-    findUser = async(email) => {
+
+    findUser = async (email) => {
         try {
             const response = await this.dao.findUser(email)
             return response;
-        } catch (error) {
-            throw new Error(error)
+        } 
+        catch (error) {
+            return logger.error(`something went wrong ${error}`);
         }
     }
 
-    findById = async(id) => {
+    findById = async (id) => {
         try {
             const result = await this.dao.findById(id);
-            return result;            
-        } catch (error) {
-            throw new Error(error)
+            return result;
+        } 
+        catch (error) {
+            return logger.error(`something went wrong ${error}`);
         }
     }
 
-    updateUser = async(email, newPassword) => {
+    updateUser = async (email, newPassword) => {
         try {
             await this.dao.updateUser(email, newPassword)
-        } catch (error) {
-            throw new Error(error)
+        } 
+        catch (error) {
+            return logger.error(`something went wrong ${error}`);
         }
     }
 }

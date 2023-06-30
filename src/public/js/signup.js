@@ -20,8 +20,8 @@ form.addEventListener("submit", (e) => {
         method,
         body
     })
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.log(error))
-    setTimeout(()=>{loginLink.click()}, 1000);
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.log(error))
+    setTimeout(() => { loginLink.click() }, 1000);
 })

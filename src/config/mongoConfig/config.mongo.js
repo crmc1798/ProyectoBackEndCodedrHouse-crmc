@@ -15,13 +15,12 @@ const mongoConfig = (app) => {
         saveUninitialized: false
     }))
 
-
     mongoose.set('strictQuery', false)
     mongoose.connect(dbConnet, error => {
     if (error) {
-        console.log(`Cannot connect to db. error ${error}`);
+        logger.error(`Cannot connect to db. error ${error}`)
     }
-    console.log('db conected');
+    logger.info('db conected');
 });
 }
 

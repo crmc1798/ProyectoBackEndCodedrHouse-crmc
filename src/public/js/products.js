@@ -34,7 +34,6 @@ function procesarDatos(data) {
           </div>
         </div>`;
         return respon;
-    
       })
       productos.innerHTML = html.join('');    
 }
@@ -55,6 +54,5 @@ document.addEventListener("click", (e) => {
       })
       .then(response => response.json())
       .catch(err => console.log(err))
-
   }
 })

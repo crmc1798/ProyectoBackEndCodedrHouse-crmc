@@ -29,15 +29,15 @@ const swal = async () => {
 swal()
 
 socket.on("bienvenida", data => {
-    const bienvenida = document.getElementById("bienvenida");
-    const instructions = document.getElementById("instructions");
-    let bienvenidaDOM = `Bienvenido al chat ${data}</br>`;
-    let instructionsDOM = `<h4>Instrucciones para usar el chat</h4>
+  const bienvenida = document.getElementById("bienvenida");
+  const instructions = document.getElementById("instructions");
+  let bienvenidaDOM = `Bienvenido al chat ${data}</br>`;
+  let instructionsDOM = `<h4>Instrucciones para usar el chat</h4>
     <p>Escribir mensaje en el recuadro blanco y preionar enter para enviar mensaje</p>`;
-    bienvenida.innerHTML = bienvenidaDOM;
-    instructions.innerHTML = instructionsDOM;
-  })
-  
+  bienvenida.innerHTML = bienvenidaDOM;
+  instructions.innerHTML = instructionsDOM;
+})
+
 socket.on("messageLogs", data => {
   const log = document.getElementById("messageLogs")
   let messages = ""

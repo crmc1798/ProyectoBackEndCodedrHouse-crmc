@@ -16,11 +16,9 @@ const privateAcces = (req, res, next) => {
 
 class ProductsRouter extends Route {
     init() {
-        //this.get('/', ['PUBLIC'], privateAcces, async (req, res) => {
         this.get('/', ['PUBLIC'], async (req, res) => {
             try {
                 const { user } = req.session;
-                
                 
                 let linkMold = '/products/';
                 let limit;
@@ -112,12 +110,11 @@ class ProductsRouter extends Route {
                     linkMold: linkMold,
                     user: user
                 };
-                //res.status(500).render('products', { respuestaInfo: respuestaInfo, user });//mandar a views!!!!!!!!!!!
                 res.sendSuccess(respuestaInfo);
             }
             catch (error) {
-                req.logger.fatal("Poductos no encontrados")
-                res.sendServerError(`something went wrong ${error}`)
+                logger.error(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
 
@@ -127,17 +124,15 @@ class ProductsRouter extends Route {
             res.sendSuccess(products);
         })
 
-        //this.get('/:id', ['PUBLIC'], privateAcces, async (req, res) => {
         this.get('/:id', ['USER', 'PREMIUM', 'ADMIN'], async (req, res) => {
             try {
                 const productId = req.params.id;
                 const getById = await productsMongo.getProductById(productId);
-                //res.status(500).render('productID', getById);//mandar a views!!!!!!!!!!!
                 res.sendSuccess(getById);
             }
             catch (error) {
-                req.logger.error(error.cause)
-                res.sendServerError(`something went wrong ${error}`)
+                logger.error(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
 
@@ -167,8 +162,8 @@ class ProductsRouter extends Route {
                 }
             }
             catch (error) {
-                req.logger.error(error.cause)
-                res.sendServerError(`something went wrong ${error}`)
+                logger.error(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
 
@@ -200,8 +195,8 @@ class ProductsRouter extends Route {
                 }
             }
             catch (error) {
-                req.logger.error(error.cause)
-                res.sendServerError(`something went wrong ${error}`)
+                logger.error(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
 
@@ -214,7 +209,8 @@ class ProductsRouter extends Route {
                 res.sendSuccess(getById);
             }
             catch (error) {
-                res.sendServerError(`something went wrong ${error}`)
+                logger.error(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
 
@@ -226,7 +222,8 @@ class ProductsRouter extends Route {
       
                 res.sendSuccess(`El usuario ${id} fue eliminado con éxito`)
             } catch (error) {
-                throw new Error(error)
+                logger.error(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
     }

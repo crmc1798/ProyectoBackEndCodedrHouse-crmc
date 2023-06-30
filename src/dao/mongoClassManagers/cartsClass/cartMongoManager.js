@@ -10,17 +10,17 @@ class MongoCartManager {
             return carts;
         }
         catch (error) {
-            return error;
+            return logger.error(`something went wrong ${error}`);
         }
     }
 
     async findUserID(id) {
         try {
-            const response = await Cart.findOne({owner: id})
+            const response = await Cart.findOne({ owner: id })
             return response;
         }
         catch (error) {
-            throw new Error(error)
+            throw logger.error(`something went wrong ${error}`)
         }
     }
 
@@ -30,36 +30,36 @@ class MongoCartManager {
             return addMongoCart;
         }
         catch (error) {
-            return error;
+            return logger.error(`something went wrong ${error}`);
         }
     }
 
     async getCartById(id) {
         try {
-            const getCartByIdMongo = await Cart.findOne({_id: id});
+            const getCartByIdMongo = await Cart.findOne({ _id: id });
             return getCartByIdMongo;
 
         }
         catch (error) {
-            return error;
+            return logger.error(`something went wrong ${error}`);
         }
     }
 
     async postCartProductsId(idCart, idProduct, exist) {
         try {
             const cart = await Cart.findById(idCart);
-            if(exist){
+            if (exist) {
                 const productsArrayPosition = cart.products.findIndex(item => item.product.id == idProduct);
-                cart.products[productsArrayPosition].quantity= cart.products[productsArrayPosition].quantity + 1;
+                cart.products[productsArrayPosition].quantity = cart.products[productsArrayPosition].quantity + 1;
             }
-            else{
-                cart.products.push({product: idProduct, quantity: 1});
+            else {
+                cart.products.push({ product: idProduct, quantity: 1 });
             }
-            const response = Cart.findByIdAndUpdate(idCart , cart)
+            const response = Cart.findByIdAndUpdate(idCart, cart)
             return response;
         }
         catch (error) {
-            return error;
+            return logger.error(`something went wrong ${error}`);
         }
     }
 
@@ -69,48 +69,48 @@ class MongoCartManager {
             return "cart products deleted"
         }
         catch (error) {
-            return error;
+            return logger.error(`something went wrong ${error}`);
         }
     }
 
-    async deleteById(id){
+    async deleteById(id) {
         try {
             const deleteByIdMongo = await Cart.findByIdAndDelete(id);
             return "deleted cart successfully"
-        } 
+        }
         catch (error) {
-            return error;
+            return logger.error(`something went wrong ${error}`);
         }
     }
 
     async updateCartProductsId(idCart, idProduct, exist, quantity) {
         try {
             const cart = await Cart.findById(idCart);
-            if(exist){
+            if (exist) {
                 const productsArrayPosition = cart.products.findIndex(item => item.product.id == idProduct);
                 cart.products[productsArrayPosition].quantity = quantity;
             }
-            else{
-                cart.products.push({product: idProduct, quantity: quantity});
+            else {
+                cart.products.push({ product: idProduct, quantity: quantity });
             }
-            const response = Cart.findByIdAndUpdate(idCart , cart)
+            const response = Cart.findByIdAndUpdate(idCart, cart)
             return response;
         }
         catch (error) {
-            return error;
+            return logger.error(`something went wrong ${error}`);
         }
     }
 
     async updateCartId(idCart, products) {
         try {
             const cart = await Cart.findById(idCart);
-            cart.products=products
+            cart.products = products
 
-            const response = Cart.findByIdAndUpdate(idCart , cart)
+            const response = Cart.findByIdAndUpdate(idCart, cart)
             return response;
         }
         catch (error) {
-            return error;
+            return logger.error(`something went wrong ${error}`);
         }
     }
 }

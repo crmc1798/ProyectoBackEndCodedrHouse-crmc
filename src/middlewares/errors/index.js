@@ -1,11 +1,6 @@
 const enumErrors = require("../../utils/errors/enumErrors");
 
-
 const errorHandler = (error, req, res, next) => {
-    
-    
-    //console.log(error.cause);
-    
     switch (error.code) {
         case enumErrors.INVALID_TYPES_ERROR:
             res.json({status: "error", error: error.name})
@@ -18,13 +13,10 @@ const errorHandler = (error, req, res, next) => {
             break;
             
         default:
-            res.json({status: "error", error: "Error desconocido"})
-                
+            res.json({status: "error", error: "Error desconocido"})   
             break;
     }
-    
     next();
-    
 }
 
 module.exports = errorHandler;

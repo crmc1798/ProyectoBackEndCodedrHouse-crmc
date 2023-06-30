@@ -27,8 +27,9 @@ const initializePassport = () => {
     async (jwt_playload, done) => {
       try {
         return done(null, jwt_playload);
-      } catch (error) {
-        return done(error);
+      } 
+      catch (error) {
+        return logger.error(`something went wrong ${error}`)
       }
     }
   ))
@@ -65,8 +66,9 @@ const initializePassport = () => {
 
           const newUser = await userManager.createUser(newUserInfo);
           return done(null, newUser);
-        } catch (error) {
-          return done(error);
+        } 
+        catch (error) {
+          return req.logger.error(`something went wrong ${error}`)
         }
       }
     )
@@ -92,8 +94,9 @@ const initializePassport = () => {
         if (!isValidPasswordMethod(password, user)) return done(null, false);
 
         return done(null, user);
-      } catch (error) {
-        return done(error);
+      } 
+      catch (error) {
+        return req.logger.error(`something went wrong ${error}`)
       }
     }
   )
@@ -126,7 +129,9 @@ const initializePassport = () => {
             return done(null, newUser);
           }
           done(null, user);
-        } catch (error) {
+        } 
+        catch (error) {
+          logger.error(`something went wrong ${error}`)
           done(error);
         }
       }
@@ -147,7 +152,6 @@ const initializePassport = () => {
 
           if (!user) {
             const newUserInfo = {
-              //googleId: profile._json.sub,
               first_name: profile._json.given_name,
               last_name: profile._json.family_name,
               email: profile._json.email,
@@ -163,6 +167,7 @@ const initializePassport = () => {
 
           done(null, user);
         } catch (error) {
+          logger.error(`something went wrong ${error}`)
           done(error);
         }
       }

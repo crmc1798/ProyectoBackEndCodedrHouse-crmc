@@ -9,12 +9,13 @@ class RealTimeRouter extends Route {
       try {
         const products = await productsMongo.getProducts();
         const getAll = products;
-    
+
         global.io.emit('productsList', products);
-        res.sendSuccess(getAll);  
-      } 
+        res.sendSuccess(getAll);
+      }
       catch (error) {
-        res.sendServerError(`something went wrong ${error}`)
+        logger.error(`something went wrong ${error}`)
+        return res.sendServerError(`something went wrong ${error}`)
       }
     })
   }

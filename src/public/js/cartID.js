@@ -1,6 +1,6 @@
-const url = window.location.href; // obtener la URL actual
-const parts = url.split('/'); // separar la URL por "/"
-const id = parts[parts.length - 1]; // obtener la última parte de la URL, que es el ID del producto
+const url = window.location.href; 
+const parts = url.split('/'); 
+const id = parts[parts.length - 1]; 
 
 window.onload = function() {
   fetch(`/api/carts/${id}`)

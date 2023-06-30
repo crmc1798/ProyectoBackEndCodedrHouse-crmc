@@ -4,17 +4,17 @@ const path = require('path');
 
 const swaggerConfig = (app) => {
     const swaggerOptions = {
-        definition:{
+        definition: {
             openapi: '3.0.0',
-            info:{
+            info: {
                 title: 'Documentacion API eComerse mexaRacing.',
                 description: 'Dcoumentacion sobre los endPoints de la API.'
             }
         },
-        apis:[`src/docs/**/*.yaml`],
+        apis: [`src/docs/**/*.yaml`],
     }
     const specs = swaggerJsdoc(swaggerOptions);
-    
+
     app.use('/docs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
 }
 

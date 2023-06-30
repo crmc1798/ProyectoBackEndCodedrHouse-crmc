@@ -4,12 +4,11 @@ class MongoChatManager {
 
     async saveMesagge(mesagge) {
         try {
-
             const mongoSaveMesagge = await Chat.create(mesagge);
             return "mesagge saved successfully";
         }
         catch (error) {
-            return error;
+            return logger.error(`something went wrong ${error}`);
         }
     }
 
@@ -19,7 +18,7 @@ class MongoChatManager {
             return mongoGetMesagge;
         }
         catch (error) {
-            return error;
+            return logger.error(`something went wrong ${error}`);
         }
     }
 

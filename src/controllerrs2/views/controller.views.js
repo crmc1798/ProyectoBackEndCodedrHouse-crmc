@@ -25,7 +25,8 @@ class ViewsRouter extends Route {
                 res.status(200).redirect('/login')
             }
             catch (error) {
-                res.sendServerError(`something went wrong ${error}`)
+                logger.error(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
 
@@ -34,7 +35,8 @@ class ViewsRouter extends Route {
                 res.status(200).render("signup")
             }
             catch (error) {
-                res.sendServerError(`something went wrong ${error}`)
+                logger.error(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
 
@@ -46,7 +48,8 @@ class ViewsRouter extends Route {
                 res.status(200).render("login")
             }
             catch (error) {
-                res.sendServerError(`something went wrong ${error}`)
+                logger.error(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
 
@@ -55,7 +58,8 @@ class ViewsRouter extends Route {
                 res.status(200).render('products');
             }
             catch (error) {
-                res.sendServerError(`something went wrong ${error}`)
+                logger.error(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
 
@@ -65,7 +69,8 @@ class ViewsRouter extends Route {
                 res.status(200).render('productID');
             }
             catch (error) {
-                res.sendServerError(`something went wrong ${error}`)
+                logger.error(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
 
@@ -74,7 +79,8 @@ class ViewsRouter extends Route {
                 res.status(200).render('chat.handlebars', {})
             }
             catch (error) {
-                res.sendServerError(`something went wrong ${error}`)
+                logger.error(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
 
@@ -83,7 +89,8 @@ class ViewsRouter extends Route {
                 res.status(200).render('realTimeProducts.handlebars', {});
             }
             catch (error) {
-                res.sendServerError(`something went wrong ${error}`)
+                logger.error(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
 
@@ -93,7 +100,8 @@ class ViewsRouter extends Route {
                 res.status(200).render('cart', { cartId });
             }
             catch (error) {
-                res.sendServerError(`something went wrong ${error}`)
+                logger.error(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
 
@@ -102,7 +110,8 @@ class ViewsRouter extends Route {
                 res.status(200).render('carts');
             }
             catch (error) {
-                res.sendServerError(`something went wrong ${error}`)
+                logger.error(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
 
@@ -111,7 +120,8 @@ class ViewsRouter extends Route {
                 res.status(200).render('profile');
             }
             catch (error) {
-                res.sendServerError(`something went wrong ${error}`)
+                logger.error(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
 
@@ -120,7 +130,8 @@ class ViewsRouter extends Route {
                 res.status(200).render('waitting');
             }
             catch (error) {
-                res.sendServerError(`something went wrong ${error}`)
+                logger.error(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
 
@@ -129,7 +140,8 @@ class ViewsRouter extends Route {
                 res.status(200).render('passwordForget');
             }
             catch (error) {
-                res.sendServerError(`something went wrong ${error}`)
+                logger.error(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
 
@@ -145,7 +157,8 @@ class ViewsRouter extends Route {
                   }
             }
             catch (error) {
-                res.sendServerError(`something went wrong ${error}`)
+                logger.error(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
 
@@ -158,8 +171,10 @@ class ViewsRouter extends Route {
 
                 res.render("adminPanel", {usersInfo});
                 
-            } catch (error) {
-                throw new Error(error)
+            } 
+            catch (error) {
+                logger.error(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
 
@@ -167,8 +182,10 @@ class ViewsRouter extends Route {
             try {
                 res.status(200).render('adminPanelProducts');
                 
-            } catch (error) {
-                throw new Error(error)
+            } 
+            catch (error) {
+                logger.error(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
 
@@ -176,8 +193,10 @@ class ViewsRouter extends Route {
             try {
                 res.status(200).render('myCart');
                 
-            } catch (error) {
-                throw new Error(error)
+            } 
+            catch (error) {
+                logger.error(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
 
@@ -213,7 +232,8 @@ class ViewsRouter extends Route {
                 res.status(200).json({message: 'succes'});
             }
             catch (error) {
-                res.sendServerError(`something went wrong ${error}`)
+                logger.error(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
     }

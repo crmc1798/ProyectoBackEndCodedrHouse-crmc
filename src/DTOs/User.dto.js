@@ -1,11 +1,7 @@
-
-
-//const newCart = await cartManager.addCart();
-
 const { cryptPassword } = require("../utils/cryptPassword");
 
-class UserDTO{
-    constructor(user){
+class UserDTO {
+    constructor(user) {
         this.githubId = user.githubId;
         this.googleId = user.googleId;
         this.first_name = user.first_name;

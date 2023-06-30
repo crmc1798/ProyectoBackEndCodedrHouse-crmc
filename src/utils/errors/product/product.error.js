@@ -1,30 +1,9 @@
-//const productModel = require("../../../dao/mongo/models/products.model")
-//const CustomError = require("../CustomErrors")
 const CustomError = require("../CustomErrors")
 const enumErrors = require("../enumErrors")
 
 require("colors")
 
 const productError = (pid, obj) => {
-    //const products = await productModel.count();
-    /*if(typeof pid !== "number"){
-        CustomError.createError({
-            name: "Error al encontrar el producto",
-            cause: `Se esperaba un número y se obtuvo un ${typeof pid}`,
-            message: "Error por param no válido",
-            code: enumErrors.INVALID_TYPES_ERROR
-        })
-    }*/
-
-
-    /*if(pid>products){
-        CustomError.createError({
-            name: "Error al encontrar el producto",
-            cause: `Se esperaba un número menor a ${products} y se obtuvo un ${pid}`,
-            message: "Error por param no válido",
-            code: enumErrors.INVALID_TYPES_ERROR
-        })
-    }*/
 
     if(!obj.title || !obj.description || !obj.price || !obj.thumbail || !obj.code || !obj.stock || !obj.category){
         CustomError.createError({

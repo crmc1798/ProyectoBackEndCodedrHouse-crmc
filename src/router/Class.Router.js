@@ -11,7 +11,7 @@ class Route {
     return this.router;
   }
 
-  init() {}
+  init() { }
 
   get(path, policies, ...callbacks) {
     this.router.get(
@@ -71,18 +71,18 @@ class Route {
       if (policies.includes("PUBLIC")) {
         return next();
       }
-  
+
       if (!req.session.user) {
         return res.status(200).redirect("/login")
       }
-  
+
       if (policies.includes(req.session.user.role)) {
         return next();
       }
       if (policies == 'ADMIN' && req.session.user.role != 'ADMIN') {
         return res.status(200).redirect("/login")
       }
-  
+
       next();
     };
   };

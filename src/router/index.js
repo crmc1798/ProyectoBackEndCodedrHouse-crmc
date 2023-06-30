@@ -17,7 +17,7 @@ const sessionRouter = new SessionRouter();
 const viewsRouter = new ViewsRouter();
 
 const router = (app) => {
-    
+
     app.use('/api/sessions', sessionRouter.getRouter());
     app.use('/api/products', productsRouter.getRouter());
     app.use('/api/carts', cartRouter.getRouter());

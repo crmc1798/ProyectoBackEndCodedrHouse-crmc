@@ -27,13 +27,12 @@ const userSchema = new mongoose.Schema({
     cart: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'cart'
-      }
+    }
 });
 
 userSchema.pre('findOne', function () {
     this.populate('cart', ' _id');
-    //this.populate('products.product');
-  })
+})
 
 const userModel = mongoose.model(usersCollection, userSchema);
 

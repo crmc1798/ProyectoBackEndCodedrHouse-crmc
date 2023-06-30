@@ -14,6 +14,6 @@ const isValidPasswordMethod = (password, user) => {
 }
 
 module.exports = {
-    createHash, 
+    createHash,
     isValidPasswordMethod
 };

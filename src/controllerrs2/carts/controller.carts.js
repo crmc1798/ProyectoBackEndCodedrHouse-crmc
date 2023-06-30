@@ -1,4 +1,4 @@
-const {v4: uuidv4} = require('uuid')
+const { v4: uuidv4 } = require('uuid')
 
 const ticketsModel = require('../../dao/models/tickets.model');
 const userModel = require('../../dao/models/user.model');
@@ -19,6 +19,7 @@ class CartRouter extends Route {
                 res.sendSuccess(carts);
             }
             catch (error) {
+                logger.error(`something went wrong ${error}`)
                 res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -29,33 +30,31 @@ class CartRouter extends Route {
                 const id = req.body.id;
                 const existenceCart = await cartsMongo.findUserID(id)
                 let response
-                if(!existenceCart){
+                if (!existenceCart) {
                     const carrito = {
                         owner: id
                     }
                     const createdCart = await cartsMongo.addCart(carrito);
                     cid = createdCart.id
                     const addCartToUser = await userManager.addCartToUser(id, cid)
-                    //console.log(addCartToUser);
                     response = {
                         response: 1,
                         cart: cid
-                    } 
+                    }
                 }
 
-                else{
+                else {
                     cid = existenceCart.id
                     response = {
                         response: 0,
                         cart: cid
-                    } 
+                    }
                 }
-                //const createdCart = await cartsMongo.addCart({});
-                //res.sendSuccess(createdCart);
                 return res.sendSuccess(response);
 
             }
             catch (error) {
+                logger.error(`something went wrong ${error}`)
                 res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -65,9 +64,9 @@ class CartRouter extends Route {
                 const cartId = req.params.id;
                 const getById = await cartsMongo.getCartById(cartId);
                 res.sendSuccess(getById);
-                //res.status(500).render('cart', getById);//mandar a vistas!!!!!!!!!!!!!
             }
             catch (error) {
+                logger.error(`something went wrong ${error}`)
                 res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -78,60 +77,48 @@ class CartRouter extends Route {
                 const cart = await cartsMongo.getCartById(cid);
                 const productsToPurchase = cart.products;
                 let products = [];
-                 const currentUser = cart.owner;
+                const currentUser = cart.owner;
 
                 const purchaseFilterAvailable = productsToPurchase.filter(p => (p.product.stock !== 0) && (p.product.stock > p.quantity));
                 const purchaseFilterUnavailable = productsToPurchase.filter(p => (p.product.stock === 0) || (p.product.stock < p.quantity));
                 if (purchaseFilterUnavailable.length == 0) {
                     try {
-                      await Promise.all(purchaseFilterAvailable.map(async (p) => {
-                        const productToSell = await productsMongo.getProductById(p.product._id);
-                        productToSell.stock = productToSell.stock - p.quantity;
-                  
-                        let product = {
-                          title: productToSell.title,
-                          quantity: p.quantity
-                        };
-                        //console.log(product);
-                        products.push(product);
-                  
-                        await productsMongo.updateProduct(p.product._id, productToSell);
-                      }));
-                    } catch (error) {
-                      return res.sendError('Ocurrió un error al procesar los productos');
+                        await Promise.all(purchaseFilterAvailable.map(async (p) => {
+                            const productToSell = await productsMongo.getProductById(p.product._id);
+                            productToSell.stock = productToSell.stock - p.quantity;
+
+                            let product = {
+                                title: productToSell.title,
+                                quantity: p.quantity
+                            };
+                            products.push(product);
+
+                            await productsMongo.updateProduct(p.product._id, productToSell);
+                        }));
                     }
-                  } else {
+                    catch (error) {
+                        logger.error(`something went wrong ${error}`)
+                        return res.sendError('Ocurrió un error al procesar los productos');
+                    }
+                }
+                else {
                     return res.sendSuccess('Hay productos no disponibles');
-                  }
+                }
                 const newTicketInfo = {
                     code: uuidv4(),
                     purchase_datatime: new Date().toLocaleString(),
-                    amount: purchaseFilterAvailable.reduce((acc, curr) => acc + curr.product.price*curr.quantity, 0),
+                    amount: purchaseFilterAvailable.reduce((acc, curr) => acc + curr.product.price * curr.quantity, 0),
                     purchaser: currentUser.email,
                     products: products
                 }
-                //console.log(newTicketInfo);
-                // console.log(currentUser);
-                // console.log(productsToPurchase[0].product.stock);
-                // console.log(productsToPurchase[0].quantity);
-                // console.log(purchaseFilterAvailable);
-                // console.log(purchaseFilterUnavailable);
-                // console.log();
-                // console.log();
-                // console.log();
+
                 const newTicket = await ticketsModel.create(newTicketInfo);
 
-                // if(newTicket){
-                //     await cartManager.updateOne(cid, purchaseFilterUnavailable);
-                // }
-
                 res.sendSuccess('newTicket');
-                
-                /**AGREGAR CASO DE COMPRA FALLIDA**/
 
             } catch (error) {
-                console.log(error);
-                throw error
+                logger.error(`something went wrong ${error}`)
+                return res.sendError('Ocurrió un error al procesar los productos');
             }
         })
 
@@ -152,7 +139,8 @@ class CartRouter extends Route {
                 }
             }
             catch (error) {
-                res.sendServerError(`something went wrong ${error}`)
+                logger.error(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
 
@@ -175,7 +163,8 @@ class CartRouter extends Route {
                 }
             }
             catch (error) {
-                res.sendServerError(`something went wrong ${error}`)
+                logger.error(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
 
@@ -190,14 +179,15 @@ class CartRouter extends Route {
                 const createdCart = await cartsMongo.addCart(carrito);
                 let cid = createdCart.id
                 const addCartToUser = await userManager.addCartToUser(id, cid)
-                const response ={
+                const response = {
                     delete: getById,
                     addCart: addCartToUser
                 }
                 res.sendSuccess(response);
             }
             catch (error) {
-                res.sendServerError(`something went wrong ${error}`)
+                logger.error(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
 
@@ -220,7 +210,8 @@ class CartRouter extends Route {
                 }
             }
             catch (error) {
-                res.sendServerError(`something went wrong ${error}`)
+                logger.error(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
 
@@ -232,7 +223,8 @@ class CartRouter extends Route {
                 res.sendSuccess("cart updated");
             }
             catch (error) {
-                res.sendServerError(`something went wrong ${error}`)
+                logger.error(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
     }

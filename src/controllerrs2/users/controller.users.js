@@ -22,35 +22,38 @@ class UsersRouter extends Route {
       try {
         const users = await userBD.findAll();
         res.json(users);
-      } 
+      }
       catch (error) {
-        res.sendServerError(`something went wrong ${error}`)
+        logger.error(`something went wrong ${error}`)
+        return res.sendServerError(`something went wrong ${error}`)
       }
     })
 
     this.delete("/", ['PREMIUM', 'ADMIN'], async (req, res) => {
       try {
-          const users = await userBD.findAll();
+        const users = await userBD.findAll();
 
-          const filterDate = new Date();
-          filterDate.setMinutes(filterDate.getMinutes() - 1)
+        const filterDate = new Date();
+        filterDate.setMinutes(filterDate.getMinutes() - 1)
 
-          const usersToDelete = users.filter(user => new Date(user.last_connection) < filterDate)
+        const usersToDelete = users.filter(user => new Date(user.last_connection) < filterDate)
 
-          if(usersToDelete.length !== 0){
-              usersToDelete.forEach( async (user) => {
-                  await userBD.delete(user.email)
-                  const mensaje = { message: `<div> <h1>Hola!</h1> <h2>Su cuenta se elimino por inactividad</h2> </div>`, subject: 'Cuenta eliminada de MexaRacing' }
-                  SendMail.inactiveUser(user.email, mensaje)
-              })
-              return res.sendSuccess("Los usuarios inactivos fueron borrados")
-          }
-          
-          return res.sendSuccess("No hay usuarios inactivos")
-      } catch (error) {
-          throw new Error(error);
+        if (usersToDelete.length !== 0) {
+          usersToDelete.forEach(async (user) => {
+            await userBD.delete(user.email)
+            const mensaje = { message: `<div> <h1>Hola!</h1> <h2>Su cuenta se elimino por inactividad</h2> </div>`, subject: 'Cuenta eliminada de MexaRacing' }
+            SendMail.inactiveUser(user.email, mensaje)
+          })
+          return res.sendSuccess("Los usuarios inactivos fueron borrados")
+        }
+
+        return res.sendSuccess("No hay usuarios inactivos")
+      } 
+      catch (error) {
+        logger.error(`something went wrong ${error}`)
+        return res.sendServerError(`something went wrong ${error}`)
       }
-  })
+    })
 
     this.get('/failRegister', ['PUBLIC'], (req, res) => {
       res.send({ error: 'Falló el registro' });
@@ -60,7 +63,6 @@ class UsersRouter extends Route {
       try {
         const email = req.params.email;
         const user = await userBD.findUser(email);
-        //console.log(user.role)
         if (user.role == 'USER') {
           await userBD.updateRole(email, 'PREMIUM');
           res.send({ message: 'Usuario actualizado' });
@@ -74,15 +76,14 @@ class UsersRouter extends Route {
         }
       }
       catch (error) {
-        res.sendServerError(`something went wrong ${error}`)
+        logger.error(`something went wrong ${error}`)
+        return res.sendServerError(`something went wrong ${error}`)
       }
     })
 
     this.put("/premium", ['ADMIN'], async (req, res) => {
       try {
-        
         const id = req.body.id;
-        //console.log(id);
         const user = await userBD.findByID(id);
         const email = user.email
         const role = user.role
@@ -97,22 +98,23 @@ class UsersRouter extends Route {
         res.sendSuccess(response);
 
       } catch (error) {
-        req.logger.error(error)
-        res.sendServerError(error)
+        logger.error(`something went wrong ${error}`)
+        return res.sendServerError(`something went wrong ${error}`)
       }
     })
 
     this.delete("/deleteOne", ["ADMIN"], async (req, res) => {
       try {
-          const { id } = req.body
+        const { id } = req.body
 
-          await userBD.delete(id)
+        await userBD.delete(id)
 
-          res.sendSuccess(`El usuario ${id} fue eliminado con éxito`)
+        res.sendSuccess(`El usuario ${id} fue eliminado con éxito`)
       } catch (error) {
-          throw new Error(error)
+        logger.error(`something went wrong ${error}`)
+        return res.sendServerError(`something went wrong ${error}`)
       }
-  })
+    })
 
     this.post("/documents", ["USER", "ADMIN", "PREMIUM"], uploader.any(), async (req, res) => {
       try {
@@ -125,7 +127,8 @@ class UsersRouter extends Route {
 
         res.sendSuccess(`Tus archivos ${files[0].filename} se cargaron correctamente`)
       } catch (error) {
-        throw new Error(error)
+        logger.error(`something went wrong ${error}`)
+        return res.sendServerError(`something went wrong ${error}`)
       }
     })
   }

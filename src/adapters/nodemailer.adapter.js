@@ -10,11 +10,11 @@ class NodemailerAdapter {
         subject: notifyForNewUser.subject,
         html: notifyForNewUser.message,
       }
-
       await transport.sendMail(mailOptions)
       return 'Email enviado'
-    } catch (error) {
-      throw error
+    }
+    catch (error) {
+      logger.error(`something went wrong ${error}`)
     }
   }
 }

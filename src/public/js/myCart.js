@@ -11,8 +11,6 @@ const mensaje2 = document.getElementById("mensaje2");
 const form = document.getElementById("form");
 const logoutLink = document.getElementById("logoutLink")
 
-
-
 window.onload = async function () {
   await fetch(`/api/sessions/current`)
     .then(response => response.json())
@@ -31,7 +29,6 @@ window.onload = async function () {
       const result = await response.json();
       resultFinal = result.payload.response;
       cartId = result.payload.cart;
-      //console.log(cartId);
       if (resultFinal) {
         mensaje.innerHTML = `<h4>Carrito creado</h4>`;
       }
@@ -48,21 +45,13 @@ window.onload = async function () {
     }
   }
   hacerSolicitud();
-  //   let suma = 0;
-  //   for (let i = 0; i < totalAcumulado.length; i++) {
-  //     console.log(totalAcumulado[i]);
-  //     suma += totalAcumulado[i];
-  //   }
-
-  // console.log(suma);
-
 };
 
 
 function procesarDatos(data) {
-  //console.log(data);
   userId = data._id
 }
+
 function procesarDatos2(data) {
   let html = data.products.map((data) => {
     totalUnitario = parseInt(data.quantity) * parseInt(data.product.price)
@@ -82,16 +71,13 @@ function procesarDatos2(data) {
             <button class="btn btn-dark my-2 deleteItemCart" value=${data.product._id}>Borrar</button>
             </label>
       </div>`;
-
     return respon;
-
   })
   let suma = totalAcumulado.reduce((acc, currentValue) => acc + currentValue, 0);
   cart.innerHTML = html.join('');
   cartel.innerHTML = `<button class="btn btn-dark my-2 buyCart">Comprar = ${suma}</button>
   <button class="btn btn-dark my-2 deleteCart" id="deleteCartID">Borrar Carrito</button>
   <button class="btn btn-dark my-2"><a class="text-decoration-none text-light" href='/products'>Go to Products</a></button>`;
-
 }
 
 function procesarDatos3(data) {
@@ -132,14 +118,9 @@ document.addEventListener("click", (e) => {
       .then(response => response.json())
       .then(data => {
         procesarDatos3(data.payload);
-        setTimeout(()=>{logoutLink.click()}, 1000); 
+        setTimeout(() => { logoutLink.click() }, 1000);
       })
       .catch(err => console.log(err))
-
-
-
-    //setTimeout(()=>{logoutLink.click()}, 1000); 
-
   }
 
   if (actionBtn.className.includes("deleteItemCart")) {
@@ -151,7 +132,7 @@ document.addEventListener("click", (e) => {
     })
       .then(response => response.json())
       .catch(err => console.log(err))
-    setTimeout(function () {location.reload();}, 1000);
+    setTimeout(function () { location.reload(); }, 1000);
   }
 
   if (actionBtn.className.includes("buyCart")) {
@@ -168,9 +149,6 @@ document.addEventListener("click", (e) => {
       .catch(error => console.error(error));
     let deleteCart = document.getElementById(`deleteCartID`);
     setTimeout(() => { deleteCart.click() }, 1000);
-    // setTimeout(function() {
-    //     location.reload();
-    //   }, 1000);
   }
 })
 
