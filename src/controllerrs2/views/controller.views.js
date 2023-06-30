@@ -50,7 +50,7 @@ class ViewsRouter extends Route {
             }
         })
 
-        this.get('/products', ['USER'], (req, res) => {
+        this.get('/products', ['USER', 'PREMIUM', 'ADMIN'], (req, res) => {
             try {
                 res.status(200).render('products');
             }
@@ -59,7 +59,7 @@ class ViewsRouter extends Route {
             }
         })
 
-        this.get('/products/:pid', ['USER'], (req, res) => {
+        this.get('/products/:pid', ['USER', 'PREMIUM', 'ADMIN'], (req, res) => {
             try {
                 const productId = req.params.id;
                 res.status(200).render('productID');
@@ -69,7 +69,7 @@ class ViewsRouter extends Route {
             }
         })
 
-        this.get('/chat', ['USER'], (req, res) => {
+        this.get('/chat', ['USER', 'PREMIUM', 'ADMIN'], (req, res) => {
             try {
                 res.status(200).render('chat.handlebars', {})
             }
@@ -78,7 +78,7 @@ class ViewsRouter extends Route {
             }
         })
 
-        this.get('/realTimeProducts', ['USER'], (req, res) => {
+        this.get('/realTimeProducts', ['USER', 'PREMIUM', 'ADMIN'], (req, res) => {
             try {
                 res.status(200).render('realTimeProducts.handlebars', {});
             }
@@ -87,7 +87,7 @@ class ViewsRouter extends Route {
             }
         })
 
-        this.get('/cart/:id', ['USER'], (req, res) => {
+        this.get('/cart/:id', ['USER', 'PREMIUM', 'ADMIN'], (req, res) => {
             try {
                 const cartId = req.params.id;
                 res.status(200).render('cart', { cartId });
@@ -97,7 +97,7 @@ class ViewsRouter extends Route {
             }
         })
 
-        this.get('/carts', ['USER'], (req, res) => {
+        this.get('/carts', ['USER', 'PREMIUM', 'ADMIN'], (req, res) => {
             try {
                 res.status(200).render('carts');
             }
@@ -106,7 +106,7 @@ class ViewsRouter extends Route {
             }
         })
 
-        this.get('/profile', ['USER'], (req, res) => {
+        this.get('/profile', ['USER', 'PREMIUM', 'ADMIN'], (req, res) => {
             try {
                 res.status(200).render('profile');
             }
@@ -166,6 +166,15 @@ class ViewsRouter extends Route {
         this.get('/adminPanelProducts', ['ADMIN'], async (req, res) => {
             try {
                 res.status(200).render('adminPanelProducts');
+                
+            } catch (error) {
+                throw new Error(error)
+            }
+        })
+
+        this.get('/myCart', ['USER', 'PREMIUM', 'ADMIN'], async (req, res) => {
+            try {
+                res.status(200).render('myCart');
                 
             } catch (error) {
                 throw new Error(error)

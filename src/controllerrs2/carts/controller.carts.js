@@ -4,11 +4,11 @@ const ticketsModel = require('../../dao/models/tickets.model');
 const userModel = require('../../dao/models/user.model');
 const { MongoCartManager } = require('../../dao/mongoClassManagers/cartsClass/cartMongoManager');
 const cartsMongo = new MongoCartManager();
-
 const { MongoProductManager } = require('../../dao/mongoClassManagers/productsClass/productMongoManager');
 const productsMongo = new MongoProductManager();
 const Route = require('../../router/Class.Router');
-
+const { UserManager } = require('../../dao/mongoClassManagers/userClass/userMongoManager');
+const userManager = new UserManager();
 
 
 class CartRouter extends Route {
@@ -25,8 +25,34 @@ class CartRouter extends Route {
 
         this.post('/', ['USER', 'PREMIUM', 'ADMIN'], async (req, res) => {
             try {
-                const createdCart = await cartsMongo.addCart({});
-                res.sendSuccess(createdCart);
+                let cid
+                const id = req.body.id;
+                const existenceCart = await cartsMongo.findUserID(id)
+                let response
+                if(!existenceCart){
+                    const carrito = {
+                        owner: id
+                    }
+                    const createdCart = await cartsMongo.addCart(carrito);
+                    cid = createdCart.id
+                    const addCartToUser = await userManager.addCartToUser(id, cid)
+                    //console.log(addCartToUser);
+                    response = {
+                        response: 1,
+                        cart: cid
+                    } 
+                }
+
+                else{
+                    cid = existenceCart.id
+                    response = {
+                        response: 0,
+                        cart: cid
+                    } 
+                }
+                //const createdCart = await cartsMongo.addCart({});
+                //res.sendSuccess(createdCart);
+                return res.sendSuccess(response);
 
             }
             catch (error) {
@@ -51,36 +77,60 @@ class CartRouter extends Route {
                 const { cid } = req.params;
                 const cart = await cartsMongo.getCartById(cid);
                 const productsToPurchase = cart.products;
+                let products = [];
+                 const currentUser = cart.owner;
 
-                const currentUser = await userModel.findOne({cart: cart._id});
-
-                const purchaseFilterAvailable = productsToPurchase.filter(p => p.product.stock !== 0);
-                const purchaseFilterUnavailable = productsToPurchase.filter(p => p.product.stock === 0);
-
-                purchaseFilterAvailable.forEach(async (p) => {
-                    const productToSell = await productsMongo.findById(p.product._id)
-                    productToSell.stock = productToSell.stock - p.quantity;
-                    await productsMongo.updateOne({_id: p.product._id}, productToSell);
-                })
-
+                const purchaseFilterAvailable = productsToPurchase.filter(p => (p.product.stock !== 0) && (p.product.stock > p.quantity));
+                const purchaseFilterUnavailable = productsToPurchase.filter(p => (p.product.stock === 0) || (p.product.stock < p.quantity));
+                if (purchaseFilterUnavailable.length == 0) {
+                    try {
+                      await Promise.all(purchaseFilterAvailable.map(async (p) => {
+                        const productToSell = await productsMongo.getProductById(p.product._id);
+                        productToSell.stock = productToSell.stock - p.quantity;
+                  
+                        let product = {
+                          title: productToSell.title,
+                          quantity: p.quantity
+                        };
+                        //console.log(product);
+                        products.push(product);
+                  
+                        await productsMongo.updateProduct(p.product._id, productToSell);
+                      }));
+                    } catch (error) {
+                      return res.sendError('Ocurrió un error al procesar los productos');
+                    }
+                  } else {
+                    return res.sendSuccess('Hay productos no disponibles');
+                  }
                 const newTicketInfo = {
                     code: uuidv4(),
                     purchase_datatime: new Date().toLocaleString(),
                     amount: purchaseFilterAvailable.reduce((acc, curr) => acc + curr.product.price*curr.quantity, 0),
-                    purchaser: currentUser.email
+                    purchaser: currentUser.email,
+                    products: products
                 }
-
+                //console.log(newTicketInfo);
+                // console.log(currentUser);
+                // console.log(productsToPurchase[0].product.stock);
+                // console.log(productsToPurchase[0].quantity);
+                // console.log(purchaseFilterAvailable);
+                // console.log(purchaseFilterUnavailable);
+                // console.log();
+                // console.log();
+                // console.log();
                 const newTicket = await ticketsModel.create(newTicketInfo);
 
-                if(newTicket){
-                    await cartManager.updateOne(cid, purchaseFilterUnavailable);
-                }
+                // if(newTicket){
+                //     await cartManager.updateOne(cid, purchaseFilterUnavailable);
+                // }
 
-                res.sendSuccess(newTicket);
+                res.sendSuccess('newTicket');
                 
                 /**AGREGAR CASO DE COMPRA FALLIDA**/
 
             } catch (error) {
+                console.log(error);
                 throw error
             }
         })
@@ -129,11 +179,22 @@ class CartRouter extends Route {
             }
         })
 
-        this.delete('/:id', ['ADMIN'], async (req, res) => {
+        this.delete('/:id', ['USER', 'PREMIUM', 'ADMIN'], async (req, res) => {
             try {
+                const id = req.body.id;
                 const cartId = req.params.id;
                 const getById = await cartsMongo.deleteById(cartId);
-                res.sendSuccess(getById);
+                const carrito = {
+                    owner: id
+                }
+                const createdCart = await cartsMongo.addCart(carrito);
+                let cid = createdCart.id
+                const addCartToUser = await userManager.addCartToUser(id, cid)
+                const response ={
+                    delete: getById,
+                    addCart: addCartToUser
+                }
+                res.sendSuccess(response);
             }
             catch (error) {
                 res.sendServerError(`something went wrong ${error}`)

@@ -3,7 +3,7 @@ const supertest = require("supertest");
 
 const expect = chai.expect
 
-const requester = supertest('https://proyectobackendcodedrhouse-crmc-production.up.railway.app/')
+const requester = supertest('http://localhost:8081')
 
 describe('Testing MexaRacing', () => {
   describe('Test de products', () => {

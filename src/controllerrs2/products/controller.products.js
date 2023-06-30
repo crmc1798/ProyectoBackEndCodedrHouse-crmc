@@ -2,6 +2,8 @@ const Route = require('../../router/Class.Router')
 
 const { MongoProductManager } = require('../../dao/mongoClassManagers/productsClass/productMongoManager');
 const productsMongo = new MongoProductManager();
+const { UserManager } = require('../../dao/mongoClassManagers/userClass/userMongoManager');
+const userManager = new UserManager();
 const createMock = require("../../utils/mocks/productsMock");
 const productError = require("../../utils/errors/product/product.error");
 
@@ -18,7 +20,9 @@ class ProductsRouter extends Route {
         this.get('/', ['PUBLIC'], async (req, res) => {
             try {
                 const { user } = req.session;
-                let linkMold = req.protocol + '://' + req.get('host') + '/products/';
+                
+                
+                let linkMold = '/products/';
                 let limit;
                 let page;
                 let sort;
@@ -84,14 +88,14 @@ class ProductsRouter extends Route {
                     prevLink = null;
                 }
                 else {
-                    prevLink = req.protocol + '://' + req.get('host') + '/products' + '?' + `page=${products.prevPage}` + `&limit=${limit}&sort=${prevSort}`;
+                    prevLink = '/products' + '?' + `page=${products.prevPage}` + `&limit=${limit}&sort=${prevSort}`;
                 }
 
                 if (products.hasNextPage == false) {
                     nextLink = null;
                 }
                 else {
-                    nextLink = req.protocol + '://' + req.get('host') + '/products' + '?' + `page=${products.nextPage}` + `&limit=${limit}&sort=${prevSort}`;
+                    nextLink =  '/products' + '?' + `page=${products.nextPage}` + `&limit=${limit}&sort=${prevSort}`;
                 }
 
                 const respuestaInfo = {

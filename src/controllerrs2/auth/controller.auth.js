@@ -5,7 +5,9 @@ const correo = new NodemailerAdapter();
 const { UserManager } = require('../../dao/mongoClassManagers/userClass/userMongoManager');
 const userBD = new UserManager();
 const { isValidPasswordMethod, createHash } = require('../../utils/cryptPassword');
-
+const { MongoCartManager } = require('../../dao/mongoClassManagers/cartsClass/cartMongoManager');
+const cartsMongo = new MongoCartManager();
+let cid
 class AuthRouter extends Route {
   init() {
     this.post('/', ['PUBLIC'], passport.authenticate('login', { failureRedirect: '/api/auth/failLogin' }), async (req, res) => {
@@ -18,11 +20,55 @@ class AuthRouter extends Route {
        const fechaActual = new Date();
        const fechaFormateada = fechaActual.toISOString();
        await userBD.updateConnection(req.user._id, fechaFormateada);
-       req.session.user = req.user;
+      //  if (req.user.cart) {
+      //   console.log(req.user.cart)
+      //  }
+      //  else{
+      //   let id = req.user._id
+      //   const carrito = {
+      //     owner: id
+      // }
+      // const createdCart = await cartsMongo.addCart(carrito);
+
+      // let cid = createdCart.id
+      // const addCartToUser = await userBD.addCartToUser(id, cid)
+      //  }
+      async function procesarCondicion() {
+        if (req.user.cart) {
+          req.session.user = req.user;
        req.session.user.role = req.user.role;
        req.session.user.last_connection = fechaFormateada
+          res.sendSuccess(req.user);
+        } else {
+          let id = req.user._id;
+          const carrito = {
+            owner: id
+          };
+          const createdCart = await cartsMongo.addCart(carrito);
+      
+          cid = createdCart.id;
+          const addCartToUser = await userBD.addCartToUser(id, cid);
+          const findByID = await userBD.findByID(id);
+          req.session.user = req.user;
+       req.session.user.cart = cid;
+       req.session.user.role = req.user.role;
+       req.session.user.last_connection = fechaFormateada
+          //console.log(findByID);
+          
+          // Resto del código...
+          res.sendSuccess(req.user);
+        }
+      }
+      
+      // Llamada a la función procesarCondicion()
+      procesarCondicion();
+        
+        
+        
+       
 
-        res.sendSuccess(req.user);
+       
+      
 
       } catch (error) {
         //res.sendServerError(`something went wrong ${error}`)
@@ -97,6 +143,7 @@ class AuthRouter extends Route {
         const fechaFormateada = fechaActual.toISOString();
         await userBD.updateConnection(req.user._id, fechaFormateada);
         req.session.user = req.user;
+        req.session.user.cart = req.user.cart;
         req.session.user.role = req.user.role;
         req.session.user.last_connection = fechaFormateada
         // req.session.user = {
@@ -126,6 +173,7 @@ class AuthRouter extends Route {
         const fechaFormateada = fechaActual.toISOString();
         await userBD.updateConnection(req.user._id, fechaFormateada);
         req.session.user = req.user;
+        req.session.user.cart = req.user.cart;
         req.session.user.role = req.user.role;
         req.session.user.last_connection = fechaFormateada
           res.redirect('/products');

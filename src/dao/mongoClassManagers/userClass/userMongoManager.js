@@ -15,6 +15,20 @@ class UserManager{
         }
     }
 
+    addCartToUser = async (uid, cid) => {
+        try {
+            const response = await userModel.findOneAndUpdate({ _id: uid }, {cart: cid})
+            //console.log(user);
+
+            return response;
+
+            //return newUser;
+        } catch (error) {
+            console.log(error);
+            throw new Error(error)
+        }
+    }
+
     findUser = async(user) => {
         try {
             const response = await userModel.findOne({email: user})
@@ -23,6 +37,7 @@ class UserManager{
             throw new Error(error)
         }
     }
+
 
     findByID = async(id) => {
         try {

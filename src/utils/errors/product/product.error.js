@@ -1,5 +1,5 @@
 //const productModel = require("../../../dao/mongo/models/products.model")
-const CustomError = require("../CustomErrors")
+const CustomError = require("../customErrors")
 const enumErrors = require("../enumErrors")
 
 require("colors")

@@ -1,5 +1,5 @@
 window.onload = function() {
-    fetch('https://proyectobackendcodedrhouse-crmc-production.up.railway.app/api/carts')
+    fetch('/api/carts')
       .then(response => response.json())
       .then(data => procesarDatos(data.payload))
       .catch(error => console.error(error));

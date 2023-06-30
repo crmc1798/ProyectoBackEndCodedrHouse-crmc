@@ -15,8 +15,18 @@ const ticketSchema = new mongoose.Schema({
     },
     purchaser: {
         type: String
-    }
+    },
+    products: {
+        type: [
+          {
+            title: String,
+            quantity: Number
+          }
+        ],
+        default: []
+      }
 });
+
 
 const ticketsModel = mongoose.model(ticketsCollection, ticketSchema);
 
