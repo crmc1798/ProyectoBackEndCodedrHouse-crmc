@@ -1,4 +1,4 @@
-class CustomError{
+class customError{
     static createError = ({name = "Error", cause, message, code = 1}) => {
         const error = new Error(message);
         error.name = name;
@@ -10,4 +10,4 @@ class CustomError{
 
 }
 
-module.exports = CustomError;
+module.exports = customError;
