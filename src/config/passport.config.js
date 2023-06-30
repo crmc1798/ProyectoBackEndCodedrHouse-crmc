@@ -105,7 +105,7 @@ const initializePassport = () => {
       {
         clientID: clientID_github,
         clientSecret: clientSecret_github,
-        callbackURL: 'http://localhost:8081/api/auth/githubcallback',
+        callbackURL: 'https://proyectobackendcodedrhouse-crmc-production.up.railway.app/api/auth/githubcallback',
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
