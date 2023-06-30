@@ -45,8 +45,7 @@ class AuthRouter extends Route {
         }
         procesarCondicion();
       } catch (error) {
-        req.logger.error(`something went wrong ${error}`)
-        res.sendServerError(`something went wrong ${error}`)
+        return res.sendServerError(`something went wrong ${error}`)
       }
     })
 
@@ -64,8 +63,7 @@ class AuthRouter extends Route {
         res.json({ emailSend });
       }
       catch (error) {
-        req.logger.error(`something went wrong ${error}`)
-        res.sendServerError(`something went wrong ${error}`)
+        return res.sendServerError(`something went wrong ${error}`)
       }
     })
 
@@ -89,8 +87,7 @@ class AuthRouter extends Route {
         }
       }
       catch (error) {
-        req.logger.error(`something went wrong ${error}`)
-        res.sendServerError(`something went wrong ${error}`)
+        return res.sendServerError(`something went wrong ${error}`)
       }
     })
 
@@ -99,8 +96,7 @@ class AuthRouter extends Route {
         res.json({ error: 'Falló el login' });
       }
       catch (error) {
-        req.logger.error(`something went wrong ${error}`)
-        res.sendServerError(`something went wrong ${error}`)
+        return res.sendServerError(`something went wrong ${error}`)
       }
     })
 
@@ -123,8 +119,7 @@ class AuthRouter extends Route {
           res.redirect('/products');
         }
         catch (error) {
-          req.logger.error(`something went wrong ${error}`)
-          res.sendServerError(`something went wrong ${error}`)
+          return res.sendServerError(`something went wrong ${error}`)
         }
       }
     )
@@ -148,8 +143,7 @@ class AuthRouter extends Route {
           res.redirect('/products');
         }
         catch (error) {
-          req.logger.error(`something went wrong ${error}`)
-          res.sendServerError(`something went wrong ${error}`)
+          return res.sendServerError(`something went wrong ${error}`)
         }
       }
     )
@@ -164,8 +158,7 @@ class AuthRouter extends Route {
         })
       }
       catch (error) {
-        req.logger.error(`something went wrong ${error}`)
-        res.sendServerError(`something went wrong ${error}`)
+        return res.sendServerError(`something went wrong ${error}`)
       }
     })
   }

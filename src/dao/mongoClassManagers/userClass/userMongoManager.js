@@ -8,7 +8,7 @@ class UserManager{
             return user;
         } 
         catch (error) {
-            return logger.error(`something went wrong ${error}`)
+            return error
         }
     }
 
@@ -18,7 +18,7 @@ class UserManager{
             return response;
         } 
         catch (error) {
-            return logger.error(`something went wrong ${error}`)
+            return error
         }
     }
 
@@ -28,7 +28,7 @@ class UserManager{
             return response;
         } 
         catch (error) {
-            return logger.error(`something went wrong ${error}`)
+            return error
         }
     }
 
@@ -39,7 +39,7 @@ class UserManager{
             return response;
         } 
         catch (error) {
-            return logger.error(`something went wrong ${error}`)
+            return error
         }
     }
 
@@ -49,7 +49,7 @@ class UserManager{
             return response;
         } 
         catch (error) {
-            return logger.error(`something went wrong ${error}`)
+            return error
         }
     }
 
@@ -59,7 +59,7 @@ class UserManager{
             return response;
         } 
         catch (error) {
-            return logger.error(`something went wrong ${error}`)
+            return error
         }
     }
 
@@ -69,7 +69,7 @@ class UserManager{
             return response;
         } 
         catch (error) {
-            return logger.error(`something went wrong ${error}`)
+            return error
         }
     }
 
@@ -79,7 +79,7 @@ class UserManager{
             return response;
         } 
         catch (error) {
-            return logger.error(`something went wrong ${error}`)
+            return error
         }
     }
 
@@ -89,7 +89,7 @@ class UserManager{
             return response;
         } 
         catch (error) {
-            return logger.error(`something went wrong ${error}`)
+            return error
         }
     }
 

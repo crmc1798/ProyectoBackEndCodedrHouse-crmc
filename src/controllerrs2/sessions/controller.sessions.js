@@ -12,7 +12,6 @@ class SessionRouter extends Route {
         }
       }
       catch (error) {
-        logger.error(`something went wrong ${error}`)
         return res.sendServerError(`something went wrong ${error}`)
       }
     })

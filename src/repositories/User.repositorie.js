@@ -9,7 +9,7 @@ class UserRepository {
             return user;
         } 
         catch (error) {
-            return logger.error(`something went wrong ${error}`);
+            return error
         }
     }
 
@@ -19,7 +19,7 @@ class UserRepository {
             return response;
         } 
         catch (error) {
-            return logger.error(`something went wrong ${error}`);
+            return error
         }
     }
 
@@ -29,7 +29,7 @@ class UserRepository {
             return response;
         } 
         catch (error) {
-            return logger.error(`something went wrong ${error}`);
+            return error
         }
     }
 
@@ -39,7 +39,7 @@ class UserRepository {
             return result;
         } 
         catch (error) {
-            return logger.error(`something went wrong ${error}`);
+            return error
         }
     }
 
@@ -48,7 +48,7 @@ class UserRepository {
             await this.dao.updateUser(email, newPassword)
         } 
         catch (error) {
-            return logger.error(`something went wrong ${error}`);
+            return error
         }
     }
 }

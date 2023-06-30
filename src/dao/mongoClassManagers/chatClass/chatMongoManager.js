@@ -8,7 +8,7 @@ class MongoChatManager {
             return "mesagge saved successfully";
         }
         catch (error) {
-            return logger.error(`something went wrong ${error}`);
+            return error
         }
     }
 
@@ -18,7 +18,7 @@ class MongoChatManager {
             return mongoGetMesagge;
         }
         catch (error) {
-            return logger.error(`something went wrong ${error}`);
+            return error
         }
     }
 

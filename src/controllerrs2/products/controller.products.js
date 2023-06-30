@@ -113,7 +113,6 @@ class ProductsRouter extends Route {
                 res.sendSuccess(respuestaInfo);
             }
             catch (error) {
-                logger.error(`something went wrong ${error}`)
                 return res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -131,7 +130,6 @@ class ProductsRouter extends Route {
                 res.sendSuccess(getById);
             }
             catch (error) {
-                logger.error(`something went wrong ${error}`)
                 return res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -162,7 +160,6 @@ class ProductsRouter extends Route {
                 }
             }
             catch (error) {
-                logger.error(`something went wrong ${error}`)
                 return res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -195,7 +192,6 @@ class ProductsRouter extends Route {
                 }
             }
             catch (error) {
-                logger.error(`something went wrong ${error}`)
                 return res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -209,7 +205,6 @@ class ProductsRouter extends Route {
                 res.sendSuccess(getById);
             }
             catch (error) {
-                logger.error(`something went wrong ${error}`)
                 return res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -222,7 +217,6 @@ class ProductsRouter extends Route {
       
                 res.sendSuccess(`El usuario ${id} fue eliminado con éxito`)
             } catch (error) {
-                logger.error(`something went wrong ${error}`)
                 return res.sendServerError(`something went wrong ${error}`)
             }
         })

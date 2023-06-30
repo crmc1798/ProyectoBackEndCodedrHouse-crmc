@@ -24,7 +24,6 @@ class UsersRouter extends Route {
         res.json(users);
       }
       catch (error) {
-        logger.error(`something went wrong ${error}`)
         return res.sendServerError(`something went wrong ${error}`)
       }
     })
@@ -50,7 +49,6 @@ class UsersRouter extends Route {
         return res.sendSuccess("No hay usuarios inactivos")
       } 
       catch (error) {
-        logger.error(`something went wrong ${error}`)
         return res.sendServerError(`something went wrong ${error}`)
       }
     })
@@ -76,7 +74,6 @@ class UsersRouter extends Route {
         }
       }
       catch (error) {
-        logger.error(`something went wrong ${error}`)
         return res.sendServerError(`something went wrong ${error}`)
       }
     })
@@ -98,7 +95,6 @@ class UsersRouter extends Route {
         res.sendSuccess(response);
 
       } catch (error) {
-        logger.error(`something went wrong ${error}`)
         return res.sendServerError(`something went wrong ${error}`)
       }
     })
@@ -111,7 +107,6 @@ class UsersRouter extends Route {
 
         res.sendSuccess(`El usuario ${id} fue eliminado con éxito`)
       } catch (error) {
-        logger.error(`something went wrong ${error}`)
         return res.sendServerError(`something went wrong ${error}`)
       }
     })
@@ -127,7 +122,6 @@ class UsersRouter extends Route {
 
         res.sendSuccess(`Tus archivos ${files[0].filename} se cargaron correctamente`)
       } catch (error) {
-        logger.error(`something went wrong ${error}`)
         return res.sendServerError(`something went wrong ${error}`)
       }
     })

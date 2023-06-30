@@ -25,7 +25,6 @@ class ViewsRouter extends Route {
                 res.status(200).redirect('/login')
             }
             catch (error) {
-                logger.error(`something went wrong ${error}`)
                 return res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -35,7 +34,6 @@ class ViewsRouter extends Route {
                 res.status(200).render("signup")
             }
             catch (error) {
-                logger.error(`something went wrong ${error}`)
                 return res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -48,7 +46,6 @@ class ViewsRouter extends Route {
                 res.status(200).render("login")
             }
             catch (error) {
-                logger.error(`something went wrong ${error}`)
                 return res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -58,7 +55,6 @@ class ViewsRouter extends Route {
                 res.status(200).render('products');
             }
             catch (error) {
-                logger.error(`something went wrong ${error}`)
                 return res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -69,7 +65,6 @@ class ViewsRouter extends Route {
                 res.status(200).render('productID');
             }
             catch (error) {
-                logger.error(`something went wrong ${error}`)
                 return res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -79,7 +74,6 @@ class ViewsRouter extends Route {
                 res.status(200).render('chat.handlebars', {})
             }
             catch (error) {
-                logger.error(`something went wrong ${error}`)
                 return res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -89,7 +83,6 @@ class ViewsRouter extends Route {
                 res.status(200).render('realTimeProducts.handlebars', {});
             }
             catch (error) {
-                logger.error(`something went wrong ${error}`)
                 return res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -100,7 +93,6 @@ class ViewsRouter extends Route {
                 res.status(200).render('cart', { cartId });
             }
             catch (error) {
-                logger.error(`something went wrong ${error}`)
                 return res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -110,7 +102,6 @@ class ViewsRouter extends Route {
                 res.status(200).render('carts');
             }
             catch (error) {
-                logger.error(`something went wrong ${error}`)
                 return res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -120,7 +111,6 @@ class ViewsRouter extends Route {
                 res.status(200).render('profile');
             }
             catch (error) {
-                logger.error(`something went wrong ${error}`)
                 return res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -130,7 +120,6 @@ class ViewsRouter extends Route {
                 res.status(200).render('waitting');
             }
             catch (error) {
-                logger.error(`something went wrong ${error}`)
                 return res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -140,7 +129,6 @@ class ViewsRouter extends Route {
                 res.status(200).render('passwordForget');
             }
             catch (error) {
-                logger.error(`something went wrong ${error}`)
                 return res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -157,7 +145,6 @@ class ViewsRouter extends Route {
                   }
             }
             catch (error) {
-                logger.error(`something went wrong ${error}`)
                 return res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -173,7 +160,6 @@ class ViewsRouter extends Route {
                 
             } 
             catch (error) {
-                logger.error(`something went wrong ${error}`)
                 return res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -184,7 +170,6 @@ class ViewsRouter extends Route {
                 
             } 
             catch (error) {
-                logger.error(`something went wrong ${error}`)
                 return res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -195,7 +180,6 @@ class ViewsRouter extends Route {
                 
             } 
             catch (error) {
-                logger.error(`something went wrong ${error}`)
                 return res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -232,7 +216,6 @@ class ViewsRouter extends Route {
                 res.status(200).json({message: 'succes'});
             }
             catch (error) {
-                logger.error(`something went wrong ${error}`)
                 return res.sendServerError(`something went wrong ${error}`)
             }
         })

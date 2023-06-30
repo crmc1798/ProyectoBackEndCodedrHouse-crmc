@@ -18,9 +18,9 @@ const mongoConfig = (app) => {
     mongoose.set('strictQuery', false)
     mongoose.connect(dbConnet, error => {
     if (error) {
-        logger.error(`Cannot connect to db. error ${error}`)
+        console.error(`Cannot connect to db. error ${error}`)
     }
-    logger.info('db conected');
+    console.log('db conected');
 });
 }
 

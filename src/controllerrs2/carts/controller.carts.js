@@ -19,8 +19,7 @@ class CartRouter extends Route {
                 res.sendSuccess(carts);
             }
             catch (error) {
-                logger.error(`something went wrong ${error}`)
-                res.sendServerError(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
 
@@ -54,8 +53,7 @@ class CartRouter extends Route {
 
             }
             catch (error) {
-                logger.error(`something went wrong ${error}`)
-                res.sendServerError(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
 
@@ -66,8 +64,7 @@ class CartRouter extends Route {
                 res.sendSuccess(getById);
             }
             catch (error) {
-                logger.error(`something went wrong ${error}`)
-                res.sendServerError(`something went wrong ${error}`)
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
 
@@ -97,8 +94,7 @@ class CartRouter extends Route {
                         }));
                     }
                     catch (error) {
-                        logger.error(`something went wrong ${error}`)
-                        return res.sendError('Ocurrió un error al procesar los productos');
+                        return res.sendServerError(`something went wrong ${error}`)
                     }
                 }
                 else {
@@ -117,8 +113,7 @@ class CartRouter extends Route {
                 res.sendSuccess('newTicket');
 
             } catch (error) {
-                logger.error(`something went wrong ${error}`)
-                return res.sendError('Ocurrió un error al procesar los productos');
+                return res.sendServerError(`something went wrong ${error}`)
             }
         })
 
@@ -139,7 +134,6 @@ class CartRouter extends Route {
                 }
             }
             catch (error) {
-                logger.error(`something went wrong ${error}`)
                 return res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -163,7 +157,6 @@ class CartRouter extends Route {
                 }
             }
             catch (error) {
-                logger.error(`something went wrong ${error}`)
                 return res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -186,7 +179,6 @@ class CartRouter extends Route {
                 res.sendSuccess(response);
             }
             catch (error) {
-                logger.error(`something went wrong ${error}`)
                 return res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -210,7 +202,6 @@ class CartRouter extends Route {
                 }
             }
             catch (error) {
-                logger.error(`something went wrong ${error}`)
                 return res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -223,7 +214,6 @@ class CartRouter extends Route {
                 res.sendSuccess("cart updated");
             }
             catch (error) {
-                logger.error(`something went wrong ${error}`)
                 return res.sendServerError(`something went wrong ${error}`)
             }
         })

@@ -29,7 +29,7 @@ const initializePassport = () => {
         return done(null, jwt_playload);
       } 
       catch (error) {
-        return logger.error(`something went wrong ${error}`)
+        return console.error(`something went wrong ${error}`)
       }
     }
   ))
@@ -131,7 +131,7 @@ const initializePassport = () => {
           done(null, user);
         } 
         catch (error) {
-          logger.error(`something went wrong ${error}`)
+          console.error(`something went wrong ${error}`)
           done(error);
         }
       }
@@ -167,7 +167,7 @@ const initializePassport = () => {
 
           done(null, user);
         } catch (error) {
-          logger.error(`something went wrong ${error}`)
+          console.error(`something went wrong ${error}`)
           done(error);
         }
       }

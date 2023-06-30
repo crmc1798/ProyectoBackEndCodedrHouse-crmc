@@ -14,7 +14,7 @@ class NodemailerAdapter {
       return 'Email enviado'
     }
     catch (error) {
-      logger.error(`something went wrong ${error}`)
+      console.error(`something went wrong ${error}`)
     }
   }
 }

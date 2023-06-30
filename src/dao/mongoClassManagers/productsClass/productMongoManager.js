@@ -8,7 +8,7 @@ class MongoProductManager {
             return products;
         }
         catch (error) {
-            return logger.error(`something went wrong ${error}`);
+            return error
         }
     }
 
@@ -24,7 +24,7 @@ class MongoProductManager {
             }
         }
         catch (error) {
-            return logger.error(`something went wrong ${error}`);
+            return error
         }
     }
 
@@ -34,7 +34,7 @@ class MongoProductManager {
             return getProductByIdMongo
         }
         catch (error) {
-            return logger.error(`something went wrong ${error}`);
+            return error
         }
     }
 
@@ -44,7 +44,7 @@ class MongoProductManager {
             return "deleted product successfully"
         }
         catch (error) {
-            return logger.error(`something went wrong ${error}`);
+            return error
         }
     }
 
@@ -54,7 +54,7 @@ class MongoProductManager {
             return "updated product successfully";
         }
         catch (error) {
-            return logger.error(`something went wrong ${error}`);
+            return error
         }
     }
 }

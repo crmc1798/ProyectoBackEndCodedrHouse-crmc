@@ -10,7 +10,7 @@ class MongoCartManager {
             return carts;
         }
         catch (error) {
-            return logger.error(`something went wrong ${error}`);
+            return error
         }
     }
 
@@ -20,7 +20,7 @@ class MongoCartManager {
             return response;
         }
         catch (error) {
-            throw logger.error(`something went wrong ${error}`)
+            return error
         }
     }
 
@@ -30,7 +30,7 @@ class MongoCartManager {
             return addMongoCart;
         }
         catch (error) {
-            return logger.error(`something went wrong ${error}`);
+            return error
         }
     }
 
@@ -41,7 +41,7 @@ class MongoCartManager {
 
         }
         catch (error) {
-            return logger.error(`something went wrong ${error}`);
+            return error
         }
     }
 
@@ -59,7 +59,7 @@ class MongoCartManager {
             return response;
         }
         catch (error) {
-            return logger.error(`something went wrong ${error}`);
+            return error
         }
     }
 
@@ -69,7 +69,7 @@ class MongoCartManager {
             return "cart products deleted"
         }
         catch (error) {
-            return logger.error(`something went wrong ${error}`);
+            return error
         }
     }
 
@@ -79,7 +79,7 @@ class MongoCartManager {
             return "deleted cart successfully"
         }
         catch (error) {
-            return logger.error(`something went wrong ${error}`);
+            return error
         }
     }
 
@@ -97,7 +97,7 @@ class MongoCartManager {
             return response;
         }
         catch (error) {
-            return logger.error(`something went wrong ${error}`);
+            return error
         }
     }
 
@@ -110,7 +110,7 @@ class MongoCartManager {
             return response;
         }
         catch (error) {
-            return logger.error(`something went wrong ${error}`);
+            return error
         }
     }
 }
